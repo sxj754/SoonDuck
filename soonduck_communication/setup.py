@@ -20,6 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'communication_publisher = soonduck_communication.communication_publisher:main',
+            'communication_subscriber = soonduck_communication.communication_subscriber:main',
         ],
     },
 )
