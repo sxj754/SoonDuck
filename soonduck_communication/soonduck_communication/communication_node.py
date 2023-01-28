@@ -9,7 +9,7 @@ class CommunicationNode(Node):
         self.subscribers_ = {}
 
     def create_my_publisher(self, msg_type, topic_name, qos_history_depth=10):
-        self.publishers_[topic_name] = self.create_publisher(
+        self.publishers_[topic_name] = super().create_publisher(
             msg_type, topic_name, qos_history_depth
         )
         return self.publishers_[topic_name]
@@ -17,7 +17,7 @@ class CommunicationNode(Node):
     def create_my_subscriber(
         self, msg_type, topic_name, callback, qos_history_depth=10
     ):
-        self.subscribers_[topic_name] = self.create_subscription(
+        self.subscribers_[topic_name] = super().create_subscription(
             msg_type, topic_name, callback, qos_history_depth
         )
         return self.subscribers_[topic_name]
