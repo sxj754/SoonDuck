@@ -26,7 +26,9 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration("use_sim_time", default="false")
 
     xacro_file = os.path.join(
-        get_package_share_directory("soonduck_simulation"), "urdf", "soonduck.xacro"
+        get_package_share_directory("soonduck_simulation"),
+        "description",
+        "soonduck.urdf.xacro",
     )
     assert xacro_file is not None, "Failed to parse Xacro file"
 
@@ -52,7 +54,12 @@ def generate_launch_description():
     spawn_entity = Node(
         package="gazebo_ros",
         executable="spawn_entity.py",
-        arguments=["-entity", "soonduck", "-topic", "robot_description"],
+        arguments=[
+            "-entity",
+            "soonduck",
+            "-topic",
+            "robot_description",
+        ],
         output="screen",
     )
 
