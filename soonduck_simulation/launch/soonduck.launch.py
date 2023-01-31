@@ -56,12 +56,27 @@ def generate_launch_description():
         output="screen",
     )
 
+    rviz2_launch = Node(
+        package="rviz2",
+        executable="rviz2",
+        name="rviz2",
+        arguments=[
+            "-d"
+            + os.path.join(
+                get_package_share_directory("soonduck_simulation"),
+                "rviz",
+                "config.rviz",
+            )
+        ],
+    )
+
     return LaunchDescription(
         [
             gazebo_launch,
             robot_state_publisher,
             joint_state_publisher,
             spawn_entity,
+            rviz2_launch,
         ]
     )
 
