@@ -7,6 +7,8 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
+import xacro
+
 
 def generate_launch_description():
     gazebo_launch = IncludeLaunchDescription(
@@ -23,12 +25,13 @@ def generate_launch_description():
 
     use_sim_time = LaunchConfiguration("use_sim_time", default="false")
 
-    urdf_file_name = "soonduck.urdf"
-    urdf = os.path.join(
-        get_package_share_directory("soonduck_simulation"), "urdf", urdf_file_name
+    xacro_file = os.path.join(
+        get_package_share_directory("soonduck_simulation"), "urdf", "soonduck.xacro"
     )
-    with open(urdf, "r") as file:
-        robot_desc = file.read()
+    assert xacro_file is not None, "Failed to parse Xacro file"
+
+    doc = xacro.process_file(xacro_file)
+    robot_desc = doc.toxml()
 
     robot_state_publisher = Node(
         package="robot_state_publisher",
@@ -36,7 +39,6 @@ def generate_launch_description():
         name="robot_state_publisher",
         output="screen",
         parameters=[{"use_sim_time": use_sim_time, "robot_description": robot_desc}],
-        arguments=[urdf],
     )
 
     joint_state_publisher = Node(
