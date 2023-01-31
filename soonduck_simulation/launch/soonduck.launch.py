@@ -11,6 +11,12 @@ import xacro
 
 
 def generate_launch_description():
+    world_file = os.path.join(
+        get_package_share_directory("soonduck_simulation"),
+        "worlds",
+        "obstacles.world",
+    )
+
     gazebo_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             [
@@ -18,9 +24,10 @@ def generate_launch_description():
                     get_package_share_directory("gazebo_ros"),
                     "launch",
                     "gazebo.launch.py",
-                )
+                ),
             ]
-        )
+        ),
+        launch_arguments={"world": world_file}.items(),
     )
 
     use_sim_time = LaunchConfiguration("use_sim_time", default="false")
