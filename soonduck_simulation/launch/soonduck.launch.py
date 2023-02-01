@@ -14,6 +14,11 @@ def generate_launch_description():
         "worlds",
         "obstacles.world",
     )
+    gazebo_params_path = os.path.join(
+        get_package_share_directory("soonduck_simulation"),
+        "config",
+        "gazebo_params.yaml",
+    )
 
     gazebo_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -25,7 +30,10 @@ def generate_launch_description():
                 ),
             ]
         ),
-        launch_arguments={"world": world_file}.items(),
+        launch_arguments={
+            "world": world_file,
+            "extra_gazebo_args": "--ros-args --params-file " + gazebo_params_path,
+        }.items(),
     )
 
     robot_state_publisher = IncludeLaunchDescription(
