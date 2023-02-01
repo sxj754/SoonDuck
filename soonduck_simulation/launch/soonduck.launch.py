@@ -46,7 +46,7 @@ def generate_launch_description():
                 )
             ]
         ),
-        launch_arguments={"use_sim_time": "true"}.items(),
+        launch_arguments={"use_sim_time": "true", "use_ros2_control": "true"}.items(),
     )
 
     joint_state_publisher = Node(
