@@ -69,10 +69,22 @@ def generate_launch_description():
             "-d"
             + os.path.join(
                 get_package_share_directory("soonduck_simulation"),
-                "rviz",
+                "config",
                 "config.rviz",
             )
         ],
+    )
+
+    diff_drive_spawner = Node(
+        package="controller_manager",
+        executable="spawner.py",
+        arguments=["diff_cont"],
+    )
+
+    joint_broad_spawner = Node(
+        package="controller_manager",
+        executable="spawner.py",
+        arguments=["joint_broad"],
     )
 
     return LaunchDescription(
@@ -82,5 +94,7 @@ def generate_launch_description():
             joint_state_publisher,
             spawn_entity,
             rviz2_launch,
+            diff_drive_spawner,
+            joint_broad_spawner,
         ]
     )

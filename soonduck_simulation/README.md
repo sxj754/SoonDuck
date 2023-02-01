@@ -86,14 +86,14 @@ One thing you have to know is that `get_package_share_directory` function doesn'
     /rviz
     /urdf
 ```
-Your package directory might seems like this. `/launch`, `/rviz`, and `/urdf` folders, which are at the outside of the second `/soonduck_simulation` directory, is not going to be copied into `install` directory. In order to do that, you have to modify your `setup.sh` file in your package.
+Your package directory might seems like this. `/launch`, `/config`, and `/urdf` folders, which are at the outside of the second `/soonduck_simulation` directory, is not going to be copied into `install` directory. In order to do that, you have to modify your `setup.sh` file in your package.
 ```
 data_files=[
     ("share/ament_index/resource_index/packages", ["resource/" + package_name]),
     ("share/" + package_name, ["package.xml"]),
     (os.path.join("share", package_name, "launch"), glob("launch/*.py")),
     (os.path.join("share", package_name, "urdf"), glob("urdf/*")),
-    (os.path.join("share", package_name, "rviz"), glob("rviz/*.rviz")),
+    (os.path.join("share", package_name, "config"), glob("config/*)),
 ],
 ```
 In `setup` function, find `data_files` argument and add last three lines. Those lines will include each folders to be built together. Don't forget to import necessary functions in `setup.sh` file.
@@ -104,6 +104,7 @@ from glob import glob
 
 
 # Dependencies
+## Visualizations
 
 `gazebo`
 ```
@@ -124,4 +125,24 @@ $ sudo apt-get install ros-galactic-joint-state-publisher
 
 ```
 $ sudo apt-get install ros-galactic-teleop-twist-keyboard
+```
+
+## Controls
+
+`ros2-control`
+
+```
+$ sudo apt install ros-galactic-ros2-control
+```
+
+`ros2-controllers`
+
+```
+$ sudo apt install ros-galactic-ros2-controllers
+```
+
+`gazebo-ros2-control`
+
+```
+$ sudo apt install ros-galactic-gazebo-ros2-control
 ```
