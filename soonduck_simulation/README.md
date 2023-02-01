@@ -101,7 +101,11 @@ In `setup` function, find `data_files` argument and add last three lines. Those 
 import os
 from glob import glob
 ```
-
+# Switch between ros2_control and gazebo_control
+`gazebo_control` is a way to control the robot only for gazebo simulation, but `ros2_control` is for general hardwares. Gazebo has its own control methods, and `ros2_control` translates general hardware control commands into gazebo control commands. To switch between those two, take a look at `soonduck.launch.py` file line 49. Change the value of `use_ros2_control`.
+```
+launch_arguments={"use_sim_time": "true", "use_ros2_control": "true"}.items(),
+```
 
 # Dependencies
 ## Visualizations
